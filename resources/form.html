@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单测试</title>
+</head>
+<body>
+<h1>表单测试</h1>
+<div>
+    <h2>表单 x-www-form-urlencoded</h2>
+    <form action="http://localhost:8080/form" method="post" enctype="application/x-www-form-urlencoded">
+        <input type="text" name="first_name" />
+        <input type="text" name="last_name" />
+        <input type="submit">
+    </form>
+    <h2>表单 multipart/form-data</h2>
+    <form action="http://localhost:8080/form" method="post" enctype="multipart/form-data">
+        <input type="text" name="first_name" />
+        <input type="text" name="last_name" />
+        <input type="submit">
+    </form>
+    <h2>表单 上传文件</h2>
+    <form action="http://localhost:8080/upload?id=1" method="post" enctype="multipart/form-data">
+        <input type="file" name="uploaded">
+        <input type="submit">
+    </form>
+</div>
+</body>
+</html>
