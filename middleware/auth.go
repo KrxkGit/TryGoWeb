@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 )
 
@@ -10,11 +9,12 @@ type AuthMiddleware struct {
 }
 
 func (am *AuthMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	//time.Sleep(4 * time.Second)
 	if am.Next == nil {
 		am.Next = http.DefaultServeMux
 	}
 	username, password, ok := r.BasicAuth()
-	fmt.Println(ok)
+	//fmt.Println(ok)
 	if ok && username == "Krxk" && password == "Krxk" {
 		am.Next.ServeHTTP(w, r)
 	} else {
