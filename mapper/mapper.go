@@ -52,17 +52,17 @@ func init() { /*引入包时自动被调用*/
 func GetOne(id int) (app userInfo, err error) {
 	app = userInfo{}
 	fmt.Println(id)
-	query := `SELECT id, password, email from user_info where id=?`
-	err = Db.QueryRow(query, id).Scan(&app.id, &app.password, &app.email)
+	query := `SELECT Id, password, email from user_info where Id=?`
+	err = Db.QueryRow(query, id).Scan(&app.Id, &app.password, &app.email)
 	return
 }
 
 func GetMany(id int) (apps []userInfo, err error) {
-	query := `SELECT id, password, email from user_info where id<?`
+	query := `SELECT Id, password, email from user_info where Id<?`
 	rows, err := Db.Query(query, id)
 	for rows.Next() {
 		app := userInfo{}
-		err = rows.Scan(&app.id, &app.password, &app.email)
+		err = rows.Scan(&app.Id, &app.password, &app.email)
 		if err != nil {
 			log.Fatalln(err.Error())
 		}
@@ -72,8 +72,8 @@ func GetMany(id int) (apps []userInfo, err error) {
 }
 
 func (u userInfo) Update() (err error) {
-	query := `UPDATE user_info SET password=?, email=? where id=?`
-	_, err = Db.Exec(query, u.password, u.email, u.id)
+	query := `UPDATE user_info SET password=?, email=? where Id=?`
+	_, err = Db.Exec(query, u.password, u.email, u.Id)
 	if err != nil {
 		log.Fatalln(err.Error())
 	}
@@ -83,13 +83,13 @@ func (u userInfo) Update() (err error) {
 func (u userInfo) Insert() (err error) {
 	statement, err := Db.Prepare(`INSERT INTO user_info VALUES (?,?,?)`)
 	defer statement.Close()
-	_, err = statement.Exec(u.id, u.password, u.email)
+	_, err = statement.Exec(u.Id, u.password, u.email)
 	return
 }
 
 func (u userInfo) Delete() (err error) {
-	statement, err := Db.Prepare(`DELETE FROM user_info WHERE id=?`)
+	statement, err := Db.Prepare(`DELETE FROM user_info WHERE Id=?`)
 	defer statement.Close()
-	_, err = statement.Exec(u.id)
+	_, err = statement.Exec(u.Id)
 	return
 }
